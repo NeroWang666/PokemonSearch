@@ -30,7 +30,7 @@ fun PokemonListItem(pokemon: Pokemonspecies, navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .let {
-                val backgroundColor = remember {
+                val backgroundColor = remember(pokemon.color.name) {
                     runCatching {
                         Color(pokemon.color.name.toColorInt())
                     }.getOrNull()
