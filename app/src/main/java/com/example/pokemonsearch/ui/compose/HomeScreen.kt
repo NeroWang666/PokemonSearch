@@ -19,6 +19,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -152,7 +153,12 @@ private fun PokemonList(
         isRefreshing = result is Result.Loading && !result.isLoadingMore,
         onRefresh = onRefresh,
     ) {
-        result.data()?.let { items ->
+        val data by remember(result) {
+            derivedStateOf {
+                result.data()
+            }
+        }
+        data?.let { items ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
